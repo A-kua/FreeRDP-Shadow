@@ -63,7 +63,7 @@ static BOOL freerdp_listener_open(freerdp_listener* instance, const char* bind_a
 	u_long arg;
 #endif
 
-	if (!bind_address)
+	//if (!bind_address)
 		ai_flags = AI_PASSIVE;
 
 	res = freerdp_tcp_resolve_host(bind_address, port, ai_flags);

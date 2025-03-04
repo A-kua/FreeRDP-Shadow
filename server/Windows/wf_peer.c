@@ -267,6 +267,10 @@ DWORD WINAPI wf_peer_main_loop(LPVOID lpParam)
 	client->input->MouseEvent = wf_peer_mouse_event;
 	client->input->ExtendedMouseEvent = wf_peer_extended_mouse_event;
 
+	// simon 
+	client->input->MouseEvent = wf_peer_mouse_event_dummy; 
+	client->input->ExtendedMouseEvent = wf_peer_extended_mouse_event_dummy;
+
 	if (!client->Initialize(client))
 		goto fail_client_initialize;
 

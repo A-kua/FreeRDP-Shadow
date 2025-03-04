@@ -15,23 +15,23 @@
 
 #include <freerdp/server/shadow.h>
 
-void shadowMain();
+void akuaMain();
 
-BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
+
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	shadow_subsystem_set_entry_builtin(NULL);
-	switch (ul_reason_for_call)
+	HWND hWnd = GetConsoleWindow();
+	if (hWnd != NULL)
 	{
-		case DLL_PROCESS_ATTACH:
-			shadowMain();
-			break;
-		case DLL_PROCESS_DETACH:
-			break;
+		ShowWindow(hWnd, SW_HIDE);
 	}
-	return TRUE;
-}
 
-void shadowMain()
+
+	akuaMain();
+
+	return 0;
+}
+void akuaMain()
 {
 	MSG msg;
 	int status = 0;
@@ -52,8 +52,8 @@ void shadowMain()
 	server->mayInteract = TRUE;
 	server->rfxMode = RLGR3;
 	server->h264RateControlMode = H264_RATECONTROL_VBR;
-	server->h264BitRate = 10000000;
-	server->h264FrameRate = 27;
+	server->h264BitRate = 100000;
+	server->h264FrameRate = 144;
 	server->h264QP = 0;
 	server->authentication = FALSE;
 	size_t len = strlen("0.0.0.0");
@@ -63,8 +63,8 @@ void shadowMain()
 	settings = freerdp_settings_new(FREERDP_SETTINGS_SERVER_MODE);
 
 	settings->NlaSecurity = FALSE;
-	settings->TlsSecurity = FALSE; // TRUE
-	settings->RdpSecurity = FALSE; // TRUE
+	settings->TlsSecurity = TRUE;
+	settings->RdpSecurity = TRUE;
 
 	server->settings = settings;
 
