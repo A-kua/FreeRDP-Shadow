@@ -16,10 +16,13 @@
 #include <freerdp/server/shadow.h>
 
 static void akua_main();
-extern BOOL hook_shadow_input_mouse_event(rdpInput* input, UINT16 flags, UINT16 x, UINT16 y, BOOL back);
+extern BOOL akua_shadow_input_mouse_event(rdpInput*, UINT16, UINT16, UINT16,
+                                          ptr_shadow_input_mouse_event);
+extern void setup_server(rdpShadowServer*);
 
-int main() {
-	set_ptr_post_shadow_input_mouse_event(hook_shadow_input_mouse_event);
+int main()
+{
+	hook_shadow_input_mouse_event(akua_shadow_input_mouse_event);
 	akua_main();
 }
 
@@ -39,37 +42,15 @@ void akua_main()
 	MSG msg;
 	int status = 0;
 	DWORD dwExitCode;
-	rdpSettings* settings;
-	rdpShadowServer* server;
-
-	shadow_subsystem_set_entry_builtin(NULL);
-
-	server = (rdpShadowServer*)calloc(1, sizeof(rdpShadowServer));
+	
+	rdpShadowServer* server = (rdpShadowServer*)calloc(1, sizeof(rdpShadowServer));
 
 	if (!server)
 		return;
 
-	server->port = 3388;
-	server->selectedMonitor = 0;
-	server->mayView = TRUE;
-	server->mayInteract = TRUE;
-	server->rfxMode = RLGR3;
-	server->h264RateControlMode = H264_RATECONTROL_VBR;
-	server->h264BitRate = 100000;
-	server->h264FrameRate = 30;
-	server->h264QP = 0;
-	server->authentication = FALSE;
-	size_t len = strlen("0.0.0.0");
-	server->ipcSocket = (char*)calloc(len, sizeof(CHAR));
-	_snprintf(server->ipcSocket, len, "%s", "0.0.0.0");
+	shadow_subsystem_set_entry_builtin(NULL);
 
-	settings = freerdp_settings_new(FREERDP_SETTINGS_SERVER_MODE);
-
-	settings->NlaSecurity = FALSE;
-	settings->TlsSecurity = TRUE;
-	settings->RdpSecurity = TRUE;
-
-	server->settings = settings;
+	setup_server(server);
 
 	if ((status = shadow_server_init(server)) < 0)
 		goto fail_server_init;
@@ -92,4 +73,3 @@ fail_server_start:
 fail_server_init:
 	shadow_server_free(server);
 }
-
