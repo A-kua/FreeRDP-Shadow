@@ -61,7 +61,7 @@ static BOOL win_shadow_input_keyboard_event(rdpShadowSubsystem* subsystem, rdpSh
 
 	if (flags & KBD_FLAGS_EXTENDED)
 		event.ki.dwFlags |= KEYEVENTF_EXTENDEDKEY;
-
+	
 	rc = SendInput(1, &event, sizeof(INPUT));
 	if (rc == 0)
 		return FALSE;
@@ -99,7 +99,6 @@ static BOOL win_shadow_input_mouse_event(rdpShadowSubsystem* subsystem, rdpShado
 	float height;
 	ZeroMemory(&event, sizeof(INPUT));
 	event.type = INPUT_MOUSE;
-
 	if (flags & (PTR_FLAGS_WHEEL | PTR_FLAGS_HWHEEL))
 	{
 		if (flags & PTR_FLAGS_WHEEL)

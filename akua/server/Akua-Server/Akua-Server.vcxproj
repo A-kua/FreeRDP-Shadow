@@ -152,7 +152,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="multi_main.cpp" />
+    <ClCompile Include="event_mouse.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\build\libfreerdp\freerdp.vcxproj">

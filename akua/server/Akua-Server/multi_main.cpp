@@ -15,8 +15,13 @@
 
 #include <freerdp/server/shadow.h>
 
-void akuaMain();
+static void akua_main();
+extern BOOL hook_shadow_input_mouse_event(rdpInput* input, UINT16 flags, UINT16 x, UINT16 y, BOOL back);
 
+int main() {
+	set_ptr_post_shadow_input_mouse_event(hook_shadow_input_mouse_event);
+	akua_main();
+}
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -25,13 +30,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	{
 		ShowWindow(hWnd, SW_HIDE);
 	}
-
-
-	akuaMain();
-
+	main();
 	return 0;
 }
-void akuaMain()
+
+void akua_main()
 {
 	MSG msg;
 	int status = 0;
@@ -53,7 +56,7 @@ void akuaMain()
 	server->rfxMode = RLGR3;
 	server->h264RateControlMode = H264_RATECONTROL_VBR;
 	server->h264BitRate = 100000;
-	server->h264FrameRate = 144;
+	server->h264FrameRate = 30;
 	server->h264QP = 0;
 	server->authentication = FALSE;
 	size_t len = strlen("0.0.0.0");
@@ -89,3 +92,4 @@ fail_server_start:
 fail_server_init:
 	shadow_server_free(server);
 }
+

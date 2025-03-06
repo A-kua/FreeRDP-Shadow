@@ -59,7 +59,7 @@ static BOOL shadow_input_mouse_event(rdpInput* input, UINT16 flags, UINT16 x, UI
 {
 	rdpShadowClient* client = (rdpShadowClient*)input->context;
 	rdpShadowSubsystem* subsystem = client->server->subsystem;
-
+	WLog_ERR("114514", "shadow Mouse Event");
 	if (client->server->shareSubRect)
 	{
 		x += client->server->subRect.left;
@@ -82,7 +82,6 @@ static BOOL shadow_input_mouse_event(rdpInput* input, UINT16 flags, UINT16 x, UI
 
 	if (!client->mayInteract)
 		return TRUE;
-
 	return IFCALLRESULT(TRUE, subsystem->MouseEvent, subsystem, client, flags, x, y);
 }
 
@@ -90,7 +89,6 @@ static BOOL shadow_input_extended_mouse_event(rdpInput* input, UINT16 flags, UIN
 {
 	rdpShadowClient* client = (rdpShadowClient*)input->context;
 	rdpShadowSubsystem* subsystem = client->server->subsystem;
-
 	if (client->server->shareSubRect)
 	{
 		x += client->server->subRect.left;
@@ -106,11 +104,26 @@ static BOOL shadow_input_extended_mouse_event(rdpInput* input, UINT16 flags, UIN
 	return IFCALLRESULT(TRUE, subsystem->ExtendedMouseEvent, subsystem, client, flags, x, y);
 }
 
+// Patched by Simon at 2025/03/06
+static int (*ptr_post_shadow_input_mouse_event)(rdpInput*, UINT16, UINT16 , UINT16 ,BOOL) = 0;
+static BOOL hook_shadow_input_mouse_event(rdpInput* input, UINT16 flags, UINT16 x, UINT16 y)
+{
+	BOOL back = shadow_input_mouse_event(input, flags, x, y);
+	if (ptr_post_shadow_input_mouse_event) {
+		back = ptr_post_shadow_input_mouse_event(input, flags, x, y, back);
+	}
+	return back;
+}
+void set_ptr_post_shadow_input_mouse_event(int (*ptr)(rdpInput*, UINT16, UINT16, UINT16, BOOL)) {
+	ptr_post_shadow_input_mouse_event = ptr;
+}
+
 void shadow_input_register_callbacks(rdpInput* input)
 {
+	WLog_ERR("114514", "shadow_input_register_callbacks");
 	input->SynchronizeEvent = shadow_input_synchronize_event;
 	input->KeyboardEvent = shadow_input_keyboard_event;
 	input->UnicodeKeyboardEvent = shadow_input_unicode_keyboard_event;
-	input->MouseEvent = shadow_input_mouse_event;
+	input->MouseEvent = hook_shadow_input_mouse_event;
 	input->ExtendedMouseEvent = shadow_input_extended_mouse_event;
 }

@@ -282,7 +282,8 @@ typedef struct _SHADOW_MSG_OUT_AUDIO_OUT_VOLUME SHADOW_MSG_OUT_AUDIO_OUT_VOLUME;
 extern "C"
 {
 #endif
-
+	FREERDP_API void set_ptr_post_shadow_input_mouse_event(int (*ptr)(rdpInput*, UINT16, UINT16,
+	                                                                 UINT16, BOOL));
 	FREERDP_API void shadow_subsystem_set_entry_builtin(const char* name);
 	FREERDP_API void shadow_subsystem_set_entry(pfnShadowSubsystemEntry pEntry);
 
