@@ -389,7 +389,7 @@ int shadow_encoder_reset(rdpShadowEncoder* encoder)
 		return -1;
 
 	encoder->fps = 16;
-	encoder->maxFps = 32;
+	encoder->maxFps = 114;
 	encoder->frameId = 0;
 	encoder->lastAckframeId = 0;
 	encoder->frameAck = settings->SurfaceFrameMarkerEnabled;

@@ -16,13 +16,28 @@
 #include <freerdp/server/shadow.h>
 
 static void akua_main();
+extern BOOL akua_rdp_read_share_data_header(wStream*, UINT16*, BYTE*, UINT32*, BYTE*, UINT16*,
+                                            ptr_rdp_read_share_data_header);
+extern BOOL akua_shadow_input_synchronize_event(rdpInput*, UINT32,
+                                                ptr_shadow_input_synchronize_event);
+extern BOOL akua_shadow_input_keyboard_event(rdpInput*, UINT16, UINT8,
+                                             ptr_shadow_input_keyboard_event);
+extern BOOL akua_shadow_input_unicode_keyboard_event(rdpInput*, UINT16, UINT16,
+                                                     ptr_shadow_input_unicode_keyboard_event);
 extern BOOL akua_shadow_input_mouse_event(rdpInput*, UINT16, UINT16, UINT16,
                                           ptr_shadow_input_mouse_event);
+extern BOOL akua_shadow_input_extended_mouse_event(rdpInput*, UINT16, UINT16, UINT16,
+                                                   ptr_shadow_input_extended_mouse_event);
 extern void setup_server(rdpShadowServer*);
 
 int main()
 {
+	hook_rdp_read_share_data_header(akua_rdp_read_share_data_header);
+	hook_shadow_input_synchronize_event(akua_shadow_input_synchronize_event);
+	hook_shadow_input_keyboard_event(akua_shadow_input_keyboard_event);
+	hook_shadow_input_unicode_keyboard_event(akua_shadow_input_unicode_keyboard_event);
 	hook_shadow_input_mouse_event(akua_shadow_input_mouse_event);
+	hook_shadow_input_extended_mouse_event(akua_shadow_input_extended_mouse_event);
 	akua_main();
 }
 
@@ -42,7 +57,7 @@ void akua_main()
 	MSG msg;
 	int status = 0;
 	DWORD dwExitCode;
-	
+
 	rdpShadowServer* server = (rdpShadowServer*)calloc(1, sizeof(rdpShadowServer));
 
 	if (!server)

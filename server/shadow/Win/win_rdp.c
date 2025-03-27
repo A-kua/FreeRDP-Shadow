@@ -31,7 +31,7 @@
 static void shw_OnChannelConnectedEventHandler(void* context, ChannelConnectedEventArgs* e)
 {
 	shwContext* shw = (shwContext*)context;
-	WLog_INFO(TAG, "OnChannelConnected: %s", e->name);
+	WLog_INFO(TAG, "Akua OnChannelConnected: %s", e->name);
 }
 
 static void shw_OnChannelDisconnectedEventHandler(void* context, ChannelDisconnectedEventArgs* e)
@@ -184,7 +184,6 @@ static DWORD WINAPI shw_client_thread(LPVOID arg)
 	{
 		rcount = 0;
 		wcount = 0;
-
 		if (!freerdp_get_fds(instance, rfds, &rcount, wfds, &wcount))
 		{
 			WLog_ERR(TAG, "Failed to get FreeRDP file descriptor");

@@ -1269,6 +1269,7 @@ static BOOL shadow_client_send_bitmap_update(rdpShadowClient* client, BYTE* pSrc
 			if ((newUpdateSize >= maxUpdateSize) || (i + 1) >= k)
 			{
 				bitmapUpdate.count = bitmapUpdate.number = j;
+				
 				IFCALLRET(update->BitmapUpdate, ret, context, &bitmapUpdate);
 
 				if (!ret)
@@ -1286,6 +1287,7 @@ static BOOL shadow_client_send_bitmap_update(rdpShadowClient* client, BYTE* pSrc
 	}
 	else
 	{
+		
 		IFCALLRET(update->BitmapUpdate, ret, context, &bitmapUpdate);
 
 		if (!ret)
@@ -1743,6 +1745,7 @@ static DWORD WINAPI shadow_client_thread(LPVOID arg)
 		}
 		else
 		{
+			
 			if (WTSVirtualChannelManagerIsChannelJoined(client->vcm, "drdynvc"))
 			{
 				switch (WTSVirtualChannelManagerGetDrdynvcState(client->vcm))

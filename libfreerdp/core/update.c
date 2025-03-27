@@ -801,7 +801,7 @@ BOOL update_recv(rdpUpdate* update, wStream* s)
 				WLog_ERR(TAG, "UPDATE_TYPE_BITMAP - update_read_bitmap_update() failed");
 				goto fail;
 			}
-
+			
 			rc = IFCALLRESULT(FALSE, update->BitmapUpdate, context, bitmap_update);
 			free_bitmap_update(update->context, bitmap_update);
 		}
@@ -1339,7 +1339,7 @@ static BOOL update_send_bitmap_update(rdpContext* context, const BITMAP_UPDATE* 
 	BOOL ret = TRUE;
 	update_force_flush(context);
 	s = fastpath_update_pdu_init(rdp->fastpath);
-
+	
 	if (!s)
 		return FALSE;
 

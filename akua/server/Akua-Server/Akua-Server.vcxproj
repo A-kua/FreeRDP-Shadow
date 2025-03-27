@@ -137,6 +137,9 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>I:\OpenSSL-Win64\include;D:\freerdp-2.0\build;D:\freerdp-2.0\build\include;D:\freerdp-2.0\include;D:\freerdp-2.0\winpr\include;D:\freerdp-2.0\build\winpr\include;D:\freerdp-2.0\rdtk\include;D:\freerdp-2.0\build\rdtk\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <UseFullPaths>false</UseFullPaths>
+      <Optimization>MinSpace</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -152,9 +155,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="conf.cpp" />
+    <ClCompile Include="akua_config.h" />
+    <ClCompile Include="server_conf.cpp" />
+    <ClCompile Include="control_event.cpp" />
+    <ClCompile Include="control_process.cpp" />
+    <ClCompile Include="crc_util.cpp" />
+    <ClCompile Include="file_process.cpp" />
     <ClCompile Include="multi_main.cpp" />
-    <ClCompile Include="event_mouse.cpp" />
+    <ClCompile Include="process_dispatcher.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\build\libfreerdp\freerdp.vcxproj">

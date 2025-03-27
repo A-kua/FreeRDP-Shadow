@@ -18,10 +18,25 @@
     <ClCompile Include="multi_main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="event_mouse.cpp">
+    <ClCompile Include="server_conf.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="conf.cpp">
+    <ClCompile Include="process_dispatcher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="akua_config.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="file_process.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="crc_util.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="control_process.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="control_event.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

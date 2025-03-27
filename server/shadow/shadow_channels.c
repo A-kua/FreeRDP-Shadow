@@ -24,6 +24,8 @@
 
 #include "shadow_channels.h"
 
+
+
 UINT shadow_client_channels_post_connect(rdpShadowClient* client)
 {
 	if (WTSVirtualChannelManagerIsChannelJoined(client->vcm, ENCOMSP_SVC_CHANNEL_NAME))
@@ -40,9 +42,8 @@ UINT shadow_client_channels_post_connect(rdpShadowClient* client)
 	{
 		shadow_client_rdpsnd_init(client);
 	}
-
 	shadow_client_audin_init(client);
-
+	
 	if (client->context.settings->SupportGraphicsPipeline)
 	{
 		shadow_client_rdpgfx_init(client);

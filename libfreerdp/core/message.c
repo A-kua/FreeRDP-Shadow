@@ -115,7 +115,7 @@ static BOOL update_message_BitmapUpdate(rdpContext* context, const BITMAP_UPDATE
 
 	if (!wParam)
 		return FALSE;
-
+	
 	return MessageQueue_Post(context->update->queue, (void*)context,
 	                         MakeMessageId(Update, BitmapUpdate), (void*)wParam, NULL);
 }
@@ -1603,6 +1603,7 @@ static BOOL update_message_process_update_class(rdpUpdateProxy* proxy, wMessage*
 			break;
 
 		case Update_BitmapUpdate:
+			
 			rc = IFCALLRESULT(TRUE, proxy->BitmapUpdate, msg->context, (BITMAP_UPDATE*)msg->wParam);
 			break;
 

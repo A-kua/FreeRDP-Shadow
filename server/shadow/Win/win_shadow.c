@@ -283,8 +283,8 @@ static int win_shadow_surface_copy(winShadowSubsystem* subsystem)
 		height = surface->height;
 	}
 
-	WLog_INFO(TAG, "SurfaceCopy x: %d y: %d width: %d height: %d right: %d bottom: %d", x, y, width,
-	          height, x + width, y + height);
+	//WLog_INFO(TAG, "SurfaceCopy x: %d y: %d width: %d height: %d right: %d bottom: %d", x, y, width,
+	//          height, x + width, y + height);
 #if defined(WITH_WDS_API)
 	{
 		rdpGdi* gdi;

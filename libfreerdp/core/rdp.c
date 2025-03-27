@@ -214,8 +214,9 @@ BOOL rdp_write_share_control_header(wStream* s, UINT16 length, UINT16 type, UINT
 	return TRUE;
 }
 
-BOOL rdp_read_share_data_header(wStream* s, UINT16* length, BYTE* type, UINT32* shareId,
-                                BYTE* compressedType, UINT16* compressedLength)
+// Patched by Simon at 2025/03/18
+BOOL origin_rdp_read_share_data_header(wStream* s, UINT16* length, BYTE* type, UINT32* shareId,
+                                       BYTE* compressedType, UINT16* compressedLength)
 {
 	if (Stream_GetRemainingLength(s) < 12)
 		return FALSE;
@@ -229,6 +230,38 @@ BOOL rdp_read_share_data_header(wStream* s, UINT16* length, BYTE* type, UINT32* 
 	Stream_Read_UINT8(s, *compressedType);    /* compressedType (1 byte) */
 	Stream_Read_UINT16(s, *compressedLength); /* compressedLength (2 bytes) */
 	return TRUE;
+}
+BOOL hooked_rdp_read_share_data_header_dummy(wStream* s, UINT16* length, BYTE* type,
+                                             UINT32* shareId, BYTE* compressedType,
+                                             UINT16* compressedLength,
+                                             ptr_rdp_read_share_data_header origin)
+{
+	return origin(s, length, type, shareId, compressedType, compressedLength);
+}
+
+static int (*ptr_hooked_rdp_read_share_data_header)(wStream*, UINT16*, BYTE*, UINT32*, BYTE*,
+                                                    UINT16*, ptr_rdp_read_share_data_header) =
+    hooked_rdp_read_share_data_header_dummy;
+
+static BOOL hooked_rdp_read_share_data_header(wStream* s, UINT16* length, BYTE* type,
+                                              UINT32* shareId, BYTE* compressedType,
+                                              UINT16* compressedLength)
+{
+	return ptr_hooked_rdp_read_share_data_header(s, length, type, shareId, compressedType,
+	                                             compressedLength,
+	                                             origin_rdp_read_share_data_header);
+}
+void hook_rdp_read_share_data_header(int (*ptr)(wStream*, UINT16*, BYTE*, UINT32*, BYTE*, UINT16*,
+                                                ptr_rdp_read_share_data_header origin))
+{
+	ptr_hooked_rdp_read_share_data_header = ptr;
+}
+
+BOOL rdp_read_share_data_header(wStream* s, UINT16* length, BYTE* type, UINT32* shareId,
+                                BYTE* compressedType, UINT16* compressedLength)
+{
+	return hooked_rdp_read_share_data_header(s, length, type, shareId, compressedType,
+	                                             compressedLength);
 }
 
 BOOL rdp_write_share_data_header(wStream* s, UINT16 length, BYTE type, UINT32 share_id)

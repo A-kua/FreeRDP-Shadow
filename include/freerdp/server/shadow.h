@@ -282,9 +282,23 @@ typedef struct _SHADOW_MSG_OUT_AUDIO_OUT_VOLUME SHADOW_MSG_OUT_AUDIO_OUT_VOLUME;
 extern "C"
 {
 #endif
-	typedef int (*ptr_shadow_input_mouse_event)(rdpInput*, uint16_t, uint16_t, uint16_t);
+	typedef int (*ptr_shadow_input_synchronize_event)(rdpInput*, UINT32);
+	typedef int (*ptr_shadow_input_keyboard_event)(rdpInput*, UINT16, UINT8);
+	typedef int (*ptr_shadow_input_unicode_keyboard_event)(rdpInput*, UINT16, UINT16);
+	typedef int (*ptr_shadow_input_mouse_event)(rdpInput*, UINT16, UINT16, UINT16);
+	typedef int (*ptr_shadow_input_extended_mouse_event)(rdpInput*, UINT16, UINT16, UINT16);
+
+	FREERDP_API void hook_shadow_input_synchronize_event(
+	    int (*ptr)(rdpInput*, UINT32, ptr_shadow_input_synchronize_event));
+	FREERDP_API void hook_shadow_input_keyboard_event(int (*ptr)(rdpInput*, UINT16, UINT8,
+	                                                             ptr_shadow_input_keyboard_event));
+	FREERDP_API void hook_shadow_input_unicode_keyboard_event(
+	    int (*ptr)(rdpInput*, UINT16, UINT16, ptr_shadow_input_unicode_keyboard_event));
 	FREERDP_API void hook_shadow_input_mouse_event(int (*ptr)(rdpInput*, UINT16, UINT16, UINT16,
-	                                                          ptr_shadow_input_mouse_event origin));
+	                                                          ptr_shadow_input_mouse_event));
+	FREERDP_API void hook_shadow_input_extended_mouse_event(
+	    int (*ptr)(rdpInput*, UINT16, UINT16, UINT16, ptr_shadow_input_extended_mouse_event));
+
 	FREERDP_API void shadow_subsystem_set_entry_builtin(const char* name);
 	FREERDP_API void shadow_subsystem_set_entry(pfnShadowSubsystemEntry pEntry);
 

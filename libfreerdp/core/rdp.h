@@ -181,6 +181,7 @@ struct rdp_rdp
 	CRITICAL_SECTION critical;
 };
 
+
 FREERDP_LOCAL BOOL rdp_read_security_header(wStream* s, UINT16* flags, UINT16* length);
 FREERDP_LOCAL void rdp_write_security_header(wStream* s, UINT16 flags);
 

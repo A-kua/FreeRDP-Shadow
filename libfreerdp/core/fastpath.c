@@ -325,7 +325,7 @@ static BOOL fastpath_recv_update_common(rdpFastPath* fastpath, wStream* s)
 
 			if (!bitmap_update)
 				return FALSE;
-
+			
 			rc = IFCALLRESULT(FALSE, update->BitmapUpdate, context, bitmap_update);
 			free_bitmap_update(context, bitmap_update);
 		}
@@ -805,7 +805,7 @@ static BOOL fastpath_recv_input_event(rdpFastPath* fastpath, wStream* s)
 
 	if (!fastpath_read_input_event_header(s, &eventFlags, &eventCode))
 		return FALSE;
-
+	WLog_ERR(TAG, "fastpath messageType  %" PRIu8 "", eventCode);
 	switch (eventCode)
 	{
 		case FASTPATH_INPUT_EVENT_SCANCODE:

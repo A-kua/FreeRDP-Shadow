@@ -335,7 +335,7 @@ static BOOL peer_recv_data_pdu(freerdp_peer* client, wStream* s, UINT16 totalLen
 			break;
 
 		default:
-			WLog_ERR(TAG, "Data PDU type %" PRIu8 "", type);
+			//WLog_ERR(TAG, "Data PDU type %" PRIu8 "", type);
 			break;
 	}
 

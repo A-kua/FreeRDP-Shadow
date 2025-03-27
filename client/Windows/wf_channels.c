@@ -52,6 +52,7 @@ void wf_OnChannelConnectedEventHandler(void* context, ChannelConnectedEventArgs*
 	}
 	else if (strcmp(e->name, CLIPRDR_SVC_CHANNEL_NAME) == 0)
 	{
+		WLog_WARN(TAG, "Channel CliprdrClientContext");
 		wf_cliprdr_init(wfc, (CliprdrClientContext*)e->pInterface);
 	}
 	else if (strcmp(e->name, ENCOMSP_SVC_CHANNEL_NAME) == 0)

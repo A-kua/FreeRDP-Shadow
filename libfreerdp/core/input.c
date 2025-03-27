@@ -553,7 +553,6 @@ static BOOL input_recv_event(rdpInput* input, wStream* s)
 
 	Stream_Seek(s, 4);                  /* eventTime (4 bytes), ignored by the server */
 	Stream_Read_UINT16(s, messageType); /* messageType (2 bytes) */
-
 	switch (messageType)
 	{
 		case INPUT_EVENT_SYNC:

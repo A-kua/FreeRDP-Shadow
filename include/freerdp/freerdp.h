@@ -550,6 +550,11 @@ extern "C"
 	FREERDP_API CONNECTION_STATE freerdp_get_state(rdpContext* context);
 	FREERDP_API const char* freerdp_state_string(CONNECTION_STATE state);
 
+	typedef BOOL (*ptr_rdp_read_share_data_header)(wStream*, UINT16*, BYTE*, UINT32*, BYTE*,
+	                                               UINT16*);
+	FREERDP_API void
+	hook_rdp_read_share_data_header(int (*ptr)(wStream*, UINT16*, BYTE*, UINT32*, BYTE*, UINT16*,
+	                                           ptr_rdp_read_share_data_header origin));
 #ifdef __cplusplus
 }
 #endif

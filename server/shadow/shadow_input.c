@@ -1,3 +1,4 @@
+// Patched by Simon at 2025/03/27
 /**
  * FreeRDP: A Remote Desktop Protocol Implementation
  *
@@ -33,7 +34,7 @@ static BOOL shadow_input_synchronize_event(rdpInput* input, UINT32 flags)
 	return IFCALLRESULT(TRUE, subsystem->SynchronizeEvent, subsystem, client, flags);
 }
 
-static BOOL shadow_input_keyboard_event(rdpInput* input, UINT16 flags, UINT16 code)
+static BOOL shadow_input_keyboard_event(rdpInput* input, UINT16 flags, UINT8 code)
 {
 	rdpShadowClient* client = (rdpShadowClient*)input->context;
 	rdpShadowSubsystem* subsystem = client->server->subsystem;
@@ -59,6 +60,7 @@ static BOOL shadow_input_mouse_event(rdpInput* input, UINT16 flags, UINT16 x, UI
 {
 	rdpShadowClient* client = (rdpShadowClient*)input->context;
 	rdpShadowSubsystem* subsystem = client->server->subsystem;
+
 	if (client->server->shareSubRect)
 	{
 		x += client->server->subRect.left;
@@ -81,6 +83,7 @@ static BOOL shadow_input_mouse_event(rdpInput* input, UINT16 flags, UINT16 x, UI
 
 	if (!client->mayInteract)
 		return TRUE;
+
 	return IFCALLRESULT(TRUE, subsystem->MouseEvent, subsystem, client, flags, x, y);
 }
 
@@ -88,6 +91,7 @@ static BOOL shadow_input_extended_mouse_event(rdpInput* input, UINT16 flags, UIN
 {
 	rdpShadowClient* client = (rdpShadowClient*)input->context;
 	rdpShadowSubsystem* subsystem = client->server->subsystem;
+
 	if (client->server->shareSubRect)
 	{
 		x += client->server->subRect.left;
@@ -103,32 +107,105 @@ static BOOL shadow_input_extended_mouse_event(rdpInput* input, UINT16 flags, UIN
 	return IFCALLRESULT(TRUE, subsystem->ExtendedMouseEvent, subsystem, client, flags, x, y);
 }
 
-// Patched by Simon at 2025/03/06
+// Patched by Simon at 2025/03/27
+BOOL hooked_shadow_input_synchronize_event_dummy(rdpInput* input, UINT32 flags,
+                                                 ptr_shadow_input_synchronize_event origin)
+{
+	return origin(input, flags);
+}
+BOOL hooked_shadow_input_keyboard_event_dummy(rdpInput* input, UINT16 flags, UINT8 code,
+                                              ptr_shadow_input_keyboard_event origin)
+{
+	return origin(input, flags, code);
+}
+BOOL hooked_shadow_input_unicode_keyboard_event_dummy(
+    rdpInput* input, UINT16 flags, UINT16 code, ptr_shadow_input_unicode_keyboard_event origin)
+{
+	return origin(input, flags, code);
+}
 BOOL hooked_shadow_input_mouse_event_dummy(rdpInput* input, UINT16 flags, UINT16 x, UINT16 y,
                                            ptr_shadow_input_mouse_event origin)
 {
 	return origin(input, flags, x, y);
 }
+BOOL hooked_shadow_input_extended_mouse_event_dummy(rdpInput* input, UINT16 flags, UINT16 x,
+                                                    UINT16 y,
+                                                    ptr_shadow_input_extended_mouse_event origin)
+{
+	return origin(input, flags, x, y);
+}
 
+static int (*ptr_hooked_shadow_input_synchronize_event)(rdpInput*, UINT32,
+                                                        ptr_shadow_input_synchronize_event) =
+    hooked_shadow_input_synchronize_event_dummy;
+static int (*ptr_hooked_shadow_input_keyboard_event)(rdpInput*, UINT16, UINT8,
+                                                     ptr_shadow_input_keyboard_event) =
+    hooked_shadow_input_keyboard_event_dummy;
+static int (*ptr_hooked_shadow_input_unicode_keyboard_event)(
+    rdpInput*, UINT16, UINT16,
+    ptr_shadow_input_unicode_keyboard_event) = hooked_shadow_input_unicode_keyboard_event_dummy;
 static int (*ptr_hooked_shadow_input_mouse_event)(rdpInput*, UINT16, UINT16, UINT16,
                                                   ptr_shadow_input_mouse_event) =
     hooked_shadow_input_mouse_event_dummy;
+static int (*ptr_hooked_shadow_input_extended_mouse_event)(rdpInput*, UINT16, UINT16, UINT16,
+                                                           ptr_shadow_input_extended_mouse_event) =
+    hooked_shadow_input_extended_mouse_event_dummy;
 
+static BOOL hooked_shadow_input_synchronize_event(rdpInput* input, UINT32 flags)
+{
+	return ptr_hooked_shadow_input_synchronize_event(input, flags, shadow_input_synchronize_event);
+}
+static BOOL hooked_shadow_input_keyboard_event(rdpInput* input, UINT16 flags, UINT8 code)
+{
+	return ptr_hooked_shadow_input_keyboard_event(input, flags, code, shadow_input_keyboard_event);
+}
+static BOOL hooked_shadow_input_unicode_keyboard_event(rdpInput* input, UINT16 flags, UINT16 code)
+{
+	return ptr_hooked_shadow_input_unicode_keyboard_event(input, flags, code,
+	                                                      shadow_input_unicode_keyboard_event);
+}
 static BOOL hooked_shadow_input_mouse_event(rdpInput* input, UINT16 flags, UINT16 x, UINT16 y)
 {
 	return ptr_hooked_shadow_input_mouse_event(input, flags, x, y, shadow_input_mouse_event);
+}
+static BOOL hooked_shadow_input_extended_mouse_event(rdpInput* input, UINT16 flags, UINT16 x,
+                                                     UINT16 y)
+{
+	return ptr_hooked_shadow_input_extended_mouse_event(input, flags, x, y,
+	                                                    shadow_input_extended_mouse_event);
+}
+
+void shadow_input_register_callbacks(rdpInput* input)
+{
+	input->SynchronizeEvent = hooked_shadow_input_synchronize_event;
+	input->KeyboardEvent = hooked_shadow_input_keyboard_event;
+	input->UnicodeKeyboardEvent = hooked_shadow_input_unicode_keyboard_event;
+	input->MouseEvent = hooked_shadow_input_mouse_event;
+	input->ExtendedMouseEvent = hooked_shadow_input_extended_mouse_event;
+}
+
+void hook_shadow_input_synchronize_event(int (*ptr)(rdpInput*, UINT32,
+                                                    ptr_shadow_input_synchronize_event))
+{
+	ptr_hooked_shadow_input_synchronize_event = ptr;
+}
+void hook_shadow_input_keyboard_event(int (*ptr)(rdpInput*, UINT16, UINT8,
+                                                 ptr_shadow_input_keyboard_event))
+{
+	ptr_hooked_shadow_input_keyboard_event = ptr;
+}
+void hook_shadow_input_unicode_keyboard_event(int (*ptr)(rdpInput*, UINT16, UINT16,
+                                                         ptr_shadow_input_unicode_keyboard_event))
+{
+	ptr_hooked_shadow_input_unicode_keyboard_event = ptr;
 }
 void hook_shadow_input_mouse_event(int (*ptr)(rdpInput*, UINT16, UINT16, UINT16,
                                               ptr_shadow_input_mouse_event))
 {
 	ptr_hooked_shadow_input_mouse_event = ptr;
 }
-
-void shadow_input_register_callbacks(rdpInput* input)
+void hook_shadow_input_extended_mouse_event(int (*ptr)(rdpInput*, UINT16, UINT16, UINT16,
+                                                       ptr_shadow_input_extended_mouse_event))
 {
-	input->SynchronizeEvent = shadow_input_synchronize_event;
-	input->KeyboardEvent = shadow_input_keyboard_event;
-	input->UnicodeKeyboardEvent = shadow_input_unicode_keyboard_event;
-	input->MouseEvent = hooked_shadow_input_mouse_event;
-	input->ExtendedMouseEvent = shadow_input_extended_mouse_event;
+	ptr_hooked_shadow_input_extended_mouse_event = ptr;
 }
