@@ -22,7 +22,6 @@ BOOL akua_rdp_read_share_data_header(wStream* s, UINT16* length, BYTE* type, UIN
 	{
 		case STREAM_FILE:
 		{
-			//WLog_ERR("akua", "process file");
 			akua_file_process(s,type);
 			goto intercept;
 		}

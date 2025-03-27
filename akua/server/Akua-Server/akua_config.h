@@ -12,8 +12,6 @@ struct _fileTransferHead
 };
 typedef struct _fileTransferHead fileTransferHead;
 
-static BOOL mEnableControl = TRUE;
-
 #define STREAM_FILE 0x05
 #define STREAM_CONTROL 0x06
 
@@ -21,5 +19,6 @@ static BOOL mEnableControl = TRUE;
 
 void akua_file_process(wStream* s, BYTE* type);
 void akua_control_process(wStream* s, BYTE* type);
+void akua_set_control(BOOL state);
 UINT32 calcuate_file_crc32(HANDLE hFile);
 #endif

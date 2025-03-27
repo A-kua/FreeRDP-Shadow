@@ -8,18 +8,17 @@ void akua_control_process(wStream* s, BYTE* type)
 	Stream_Read_UINT16(s, magicCode1);
 	if (magicCode1 != 0x8135)
 		goto seek_remaining;
-
 	Stream_Read_UINT8(s, state);
 	switch (state)
 	{
 		case 0xff:
 		{
-			mEnableControl = TRUE;
+			akua_set_control(TRUE);
 			break;
 		}
 		case 0x00:
 		{
-			mEnableControl = FALSE;
+			akua_set_control(FALSE);
 			break;
 		}
 		default:
@@ -28,7 +27,6 @@ void akua_control_process(wStream* s, BYTE* type)
 	Stream_Read_UINT8(s, magicCode2);
 	if (magicCode2 != 0xb3)
 		goto seek_remaining;
-
 	return;
 seek_remaining:
 	WLog_ERR("akua", "seek remaining");
