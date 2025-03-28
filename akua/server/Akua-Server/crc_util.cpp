@@ -36,7 +36,7 @@ static const UINT32 crc32_table[256] = {
 	0xB3667A2E, 0xC4614AB8, 0x5D681B02, 0x2A6F2B94, 0xB40BBE37, 0xC30C8EA1, 0x5A05DF1B, 0x2D02EF8D
 };
 
-UINT32 calcuate_file_crc32(HANDLE hFile)
+UINT32 calcuateFileCrc32(HANDLE hFile)
 {
 	UINT32 crc = 0xFFFFFFFF;
 	const int buffer_size = 4096;
@@ -52,4 +52,16 @@ UINT32 calcuate_file_crc32(HANDLE hFile)
 	}
 
 	return crc ^= 0xFFFFFFFF;
+}
+
+UINT32 calculateCrc32(const UINT8* data, UINT32 length)
+{
+	UINT32 crc = 0xFFFFFFFF;
+
+	for (UINT32 i = 0; i < length; i++)
+	{
+		crc = (crc >> 8) ^ crc32_table[(crc ^ data[i]) & 0xFF];
+	}
+
+	return crc ^ 0xFFFFFFFF;
 }

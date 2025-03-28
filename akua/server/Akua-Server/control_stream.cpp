@@ -1,6 +1,6 @@
 #include "akua_config.h"
 
-void akua_control_process(wStream* s, BYTE* type)
+void akuaControlProcess(wStream* s, BYTE* type)
 {
 	UINT16 magicCode1;
 	UINT8 state;
@@ -13,12 +13,12 @@ void akua_control_process(wStream* s, BYTE* type)
 	{
 		case 0xff:
 		{
-			akua_set_control(TRUE);
+			akuaSetControl(TRUE);
 			break;
 		}
 		case 0x00:
 		{
-			akua_set_control(FALSE);
+			akuaSetControl(FALSE);
 			break;
 		}
 		default:

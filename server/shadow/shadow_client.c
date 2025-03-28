@@ -1197,10 +1197,12 @@ static BOOL shadow_client_send_bitmap_update(rdpShadowClient* client, BYTE* pSrc
 
 			if (settings->ColorDepth < 32)
 			{
+				
 				int bitsPerPixel = settings->ColorDepth;
 				int bytesPerPixel = (bitsPerPixel + 7) / 8;
 				DstSize = 64 * 64 * 4;
 				buffer = encoder->grid[k];
+				
 				interleaved_compress(encoder->interleaved, buffer, &DstSize, bitmap->width,
 				                     bitmap->height, pSrcData, SrcFormat, nSrcStep,
 				                     bitmap->destLeft, bitmap->destTop, NULL, bitsPerPixel);
@@ -1212,6 +1214,7 @@ static BOOL shadow_client_send_bitmap_update(rdpShadowClient* client, BYTE* pSrc
 			}
 			else
 			{
+				
 				UINT32 dstSize;
 				buffer = encoder->grid[k];
 				data = &pSrcData[(bitmap->destTop * nSrcStep) + (bitmap->destLeft * 4)];

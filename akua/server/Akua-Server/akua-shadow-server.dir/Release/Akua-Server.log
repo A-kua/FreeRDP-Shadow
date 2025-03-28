@@ -1,9 +1,7 @@
-﻿  akua_config.h
-  control_event.cpp
-  control_process.cpp
+﻿  stream_dispatcher.cpp
   Generating code
-  11 of 32 functions (34.4%) were compiled, the rest were copied from previous compilation.
-    1 functions were new in current compilation
-    1 functions had inline decision re-evaluated but remain unchanged
+  3 of 54 functions ( 5.6%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   Akua-Server.vcxproj -> D:\freerdp-2.0\build\Release\akua-shadow-server.exe

@@ -1,7 +1,7 @@
 #include "akua_config.h"
 
 static BOOL controlState = TRUE;
-void akua_set_control(BOOL state)
+void akuaSetControl(BOOL state)
 {
 	controlState = state;
 }

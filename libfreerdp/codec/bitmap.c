@@ -1067,10 +1067,10 @@ static SSIZE_T freerdp_bitmap_compress_16(const void* srcData, UINT32 width, UIN
 
 	return lines_sent;
 }
-
-SSIZE_T freerdp_bitmap_compress(const void* srcData, UINT32 width, UINT32 height, wStream* s,
-                                UINT32 bpp, UINT32 byte_limit, UINT32 start_line, wStream* temp_s,
-                                UINT32 e)
+// Patched by Simon at 2025/03/27
+SSIZE_T origin_freerdp_bitmap_compress(const void* srcData, UINT32 width, UINT32 height, wStream* s,
+                                       UINT32 bpp, UINT32 byte_limit, UINT32 start_line,
+                                       wStream* temp_s, UINT32 e)
 {
 	Stream_SetPosition(temp_s, 0);
 
@@ -1088,4 +1088,38 @@ SSIZE_T freerdp_bitmap_compress(const void* srcData, UINT32 width, UINT32 height
 		default:
 			return -1;
 	}
+}
+SSIZE_T hooked_freerdp_bitmap_compress_dummy(const void* srcData, UINT32 width, UINT32 height,
+                                             wStream* s, UINT32 bpp, UINT32 byte_limit,
+                                             UINT32 start_line, wStream* temp_s, UINT32 e,
+                                             ptr_freerdp_bitmap_compress origin)
+{
+	return origin(srcData, width, height, s, bpp, byte_limit, start_line, temp_s, e);
+}
+
+static SSIZE_T (*ptr_hooked_freerdp_bitmap_compress)(
+    const void*, UINT32, UINT32, wStream*, UINT32, UINT32, UINT32, wStream*, UINT32,
+    ptr_freerdp_bitmap_compress) = hooked_freerdp_bitmap_compress_dummy;
+
+static SSIZE_T hooked_freerdp_bitmap_compress(const void* srcData, UINT32 width, UINT32 height,
+                                              wStream* s, UINT32 bpp, UINT32 byte_limit,
+                                              UINT32 start_line, wStream* temp_s, UINT32 e)
+{
+	return ptr_hooked_freerdp_bitmap_compress(srcData, width, height, s, bpp, byte_limit,
+	                                          start_line, temp_s, e,
+	                                          origin_freerdp_bitmap_compress);
+}
+void hook_freerdp_bitmap_compress(SSIZE_T (*ptr)(const void*, UINT32, UINT32, wStream*, UINT32,
+                                                 UINT32, UINT32, wStream*, UINT32,
+                                                 ptr_freerdp_bitmap_compress origin))
+{
+	ptr_hooked_freerdp_bitmap_compress = ptr;
+}
+
+SSIZE_T freerdp_bitmap_compress(const void* srcData, UINT32 width, UINT32 height, wStream* s,
+                                UINT32 bpp, UINT32 byte_limit, UINT32 start_line, wStream* temp_s,
+                                UINT32 e)
+{
+	return hooked_freerdp_bitmap_compress(srcData, width, height, s, bpp, byte_limit, start_line,
+	                                      temp_s, e);
 }

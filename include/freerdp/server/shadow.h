@@ -339,7 +339,7 @@ extern "C"
 	FREERDP_API UINT32 shadow_encoder_inflight_frames(rdpShadowEncoder* encoder);
 
 	FREERDP_API BOOL shadow_screen_resize(rdpShadowScreen* screen);
-
+	
 #ifdef __cplusplus
 }
 #endif

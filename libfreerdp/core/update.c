@@ -1339,7 +1339,7 @@ static BOOL update_send_bitmap_update(rdpContext* context, const BITMAP_UPDATE* 
 	BOOL ret = TRUE;
 	update_force_flush(context);
 	s = fastpath_update_pdu_init(rdp->fastpath);
-	
+
 	if (!s)
 		return FALSE;
 

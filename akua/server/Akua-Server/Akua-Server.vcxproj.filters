@@ -13,31 +13,55 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\streams">
+      <UniqueIdentifier>{57f6d4c9-15ec-4d53-a56c-966dc71d2d31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\utils">
+      <UniqueIdentifier>{a9c81dcc-56d2-47a4-ade6-e14da6ba1f42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\structs">
+      <UniqueIdentifier>{0d1646f3-235f-4f73-a77f-2920075d9407}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="multi_main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="server_conf.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="process_dispatcher.cpp">
+    <ClCompile Include="stream_dispatcher.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="akua_config.h">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="file_process.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="crc_util.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="control_process.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="control_event.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="file_stream.cpp">
+      <Filter>Source Files\streams</Filter>
+    </ClCompile>
+    <ClCompile Include="control_stream.cpp">
+      <Filter>Source Files\streams</Filter>
+    </ClCompile>
+    <ClCompile Include="crc_util.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="color_util.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="bit_util.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="misc.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="bitmap_util.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="akua_queue.cpp">
+      <Filter>Source Files\structs</Filter>
+    </ClCompile>
+    <ClCompile Include="bitmap_stream.cpp">
+      <Filter>Source Files\streams</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

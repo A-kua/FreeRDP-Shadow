@@ -155,14 +155,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="akua_queue.cpp" />
     <ClCompile Include="akua_config.h" />
-    <ClCompile Include="server_conf.cpp" />
+    <ClCompile Include="bitmap_stream.cpp" />
+    <ClCompile Include="bitmap_util.cpp" />
+    <ClCompile Include="bit_util.cpp" />
+    <ClCompile Include="color_util.cpp" />
     <ClCompile Include="control_event.cpp" />
-    <ClCompile Include="control_process.cpp" />
+    <ClCompile Include="control_stream.cpp" />
     <ClCompile Include="crc_util.cpp" />
-    <ClCompile Include="file_process.cpp" />
+    <ClCompile Include="file_stream.cpp" />
+    <ClCompile Include="misc.cpp" />
     <ClCompile Include="multi_main.cpp" />
-    <ClCompile Include="process_dispatcher.cpp" />
+    <ClCompile Include="stream_dispatcher.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\build\libfreerdp\freerdp.vcxproj">

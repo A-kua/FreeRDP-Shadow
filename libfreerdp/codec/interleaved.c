@@ -693,7 +693,6 @@ BOOL interleaved_compress(BITMAP_INTERLEAVED_CONTEXT* interleaved, BYTE* pDstDat
 		return FALSE;
 
 	Stream_SetPosition(interleaved->bts, 0);
-
 	if (freerdp_bitmap_compress(interleaved->TempBuffer, nWidth, nHeight, s, bpp, maxSize,
 	                            nHeight - 1, interleaved->bts, 0) < 0)
 		status = FALSE;

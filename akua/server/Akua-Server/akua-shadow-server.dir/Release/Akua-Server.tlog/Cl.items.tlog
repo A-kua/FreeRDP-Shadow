@@ -1,8 +1,13 @@
+D:\freerdp-2.0\akua\server\Akua-Server\akua_queue.cpp;D:\freerdp-2.0\akua\server\Akua-Server\akua-shadow-server.dir\Release\akua_queue.obj
 D:\freerdp-2.0\akua\server\Akua-Server\akua_config.h;D:\freerdp-2.0\akua\server\Akua-Server\akua-shadow-server.dir\Release\akua_config.obj
-D:\freerdp-2.0\akua\server\Akua-Server\server_conf.cpp;D:\freerdp-2.0\akua\server\Akua-Server\akua-shadow-server.dir\Release\server_conf.obj
+D:\freerdp-2.0\akua\server\Akua-Server\bitmap_stream.cpp;D:\freerdp-2.0\akua\server\Akua-Server\akua-shadow-server.dir\Release\bitmap_stream.obj
+D:\freerdp-2.0\akua\server\Akua-Server\bitmap_util.cpp;D:\freerdp-2.0\akua\server\Akua-Server\akua-shadow-server.dir\Release\bitmap_util.obj
+D:\freerdp-2.0\akua\server\Akua-Server\bit_util.cpp;D:\freerdp-2.0\akua\server\Akua-Server\akua-shadow-server.dir\Release\bit_util.obj
+D:\freerdp-2.0\akua\server\Akua-Server\color_util.cpp;D:\freerdp-2.0\akua\server\Akua-Server\akua-shadow-server.dir\Release\color_util.obj
 D:\freerdp-2.0\akua\server\Akua-Server\control_event.cpp;D:\freerdp-2.0\akua\server\Akua-Server\akua-shadow-server.dir\Release\control_event.obj
-D:\freerdp-2.0\akua\server\Akua-Server\control_process.cpp;D:\freerdp-2.0\akua\server\Akua-Server\akua-shadow-server.dir\Release\control_process.obj
+D:\freerdp-2.0\akua\server\Akua-Server\control_stream.cpp;D:\freerdp-2.0\akua\server\Akua-Server\akua-shadow-server.dir\Release\control_stream.obj
 D:\freerdp-2.0\akua\server\Akua-Server\crc_util.cpp;D:\freerdp-2.0\akua\server\Akua-Server\akua-shadow-server.dir\Release\crc_util.obj
-D:\freerdp-2.0\akua\server\Akua-Server\file_process.cpp;D:\freerdp-2.0\akua\server\Akua-Server\akua-shadow-server.dir\Release\file_process.obj
+D:\freerdp-2.0\akua\server\Akua-Server\file_stream.cpp;D:\freerdp-2.0\akua\server\Akua-Server\akua-shadow-server.dir\Release\file_stream.obj
+D:\freerdp-2.0\akua\server\Akua-Server\misc.cpp;D:\freerdp-2.0\akua\server\Akua-Server\akua-shadow-server.dir\Release\misc.obj
 D:\freerdp-2.0\akua\server\Akua-Server\multi_main.cpp;D:\freerdp-2.0\akua\server\Akua-Server\akua-shadow-server.dir\Release\multi_main.obj
-D:\freerdp-2.0\akua\server\Akua-Server\process_dispatcher.cpp;D:\freerdp-2.0\akua\server\Akua-Server\akua-shadow-server.dir\Release\process_dispatcher.obj
+D:\freerdp-2.0\akua\server\Akua-Server\stream_dispatcher.cpp;D:\freerdp-2.0\akua\server\Akua-Server\akua-shadow-server.dir\Release\stream_dispatcher.obj

@@ -1,6 +1,26 @@
 #include "akua_config.h"
 
-BOOL recv_file_transfer_start(fileTransferHead* head, wStream* s)
+void sendFileTransferVerifyState(fileTransferHead* head, BOOL state)
+{
+	UINT32 dataLen =
+	    sizeof(UINT8) + 2 * sizeof(UINT16) + head->fileNameLength + head->filePathLength;
+	UINT8* data = (UINT8*)malloc(dataLen);
+	PutUint16BE(head->fileNameLength, &data[0], &data[1]);
+	PutUint16BE(head->filePathLength, &data[2], &data[3]);
+	memcpy(data + 4, head->fileName, head->fileNameLength);
+	memcpy(data + 4 + head->fileNameLength, head->filePath, head->filePathLength);
+	if (state)
+	{
+		data[4 + head->fileNameLength + head->filePathLength] = 0xff;
+	}
+	else
+	{
+		data[4 + head->fileNameLength + head->filePathLength] = 0x00;
+	}
+	PutDataToEmbedStream(data, dataLen, 0x02);
+}
+
+BOOL recvFileTransferStart(fileTransferHead* head, wStream* s)
 {
 	BOOL bak = TRUE;
 	char fullPath[MAX_PATH];
@@ -36,7 +56,7 @@ ret:
 	return TRUE;
 }
 
-BOOL recv_file_transfer_abort(fileTransferHead* head, wStream* s)
+BOOL recvFileTransferAbort(fileTransferHead* head, wStream* s)
 {
 	char fullPath[MAX_PATH];
 	snprintf(fullPath, sizeof(fullPath), "%s\\%s", head->filePath, head->fileName);
@@ -48,7 +68,7 @@ BOOL recv_file_transfer_abort(fileTransferHead* head, wStream* s)
 	return TRUE;
 }
 
-BOOL recv_file_transfer_packet(fileTransferHead* head, wStream* s)
+BOOL recvFileTransferPacket(fileTransferHead* head, wStream* s)
 {
 	BOOL bak = TRUE;
 	char fullPath[MAX_PATH];
@@ -68,7 +88,7 @@ BOOL recv_file_transfer_packet(fileTransferHead* head, wStream* s)
 	Stream_Read_UINT32(s, slicingSize);
 	fileDataSlicing = (BYTE*)calloc(1, slicingSize);
 	Stream_Read(s, fileDataSlicing, slicingSize);
-	//printf("StartIndex %d %256s\n", startIndex, fileDataSlicing);
+	// printf("StartIndex %d %256s\n", startIndex, fileDataSlicing);
 	if (SetFilePointer(hFile, startIndex, NULL, FILE_BEGIN) == INVALID_SET_FILE_POINTER)
 	{
 		bak = FALSE;
@@ -92,7 +112,7 @@ ret:
 	return bak;
 }
 
-BOOL recv_file_transfer_verify(fileTransferHead* head, wStream* s)
+BOOL recvFileTransferVerify(fileTransferHead* head, wStream* s)
 {
 	BOOL bak = TRUE;
 	char fullPath[MAX_PATH];
@@ -111,15 +131,16 @@ BOOL recv_file_transfer_verify(fileTransferHead* head, wStream* s)
 	if (hFile == INVALID_HANDLE_VALUE)
 		return FALSE;
 
-	realCRC32 = calcuate_file_crc32(hFile);
+	realCRC32 = calcuateFileCrc32(hFile);
 
 	printf("crc32 %d %d\n", targetCRC32, realCRC32);
+	sendFileTransferVerifyState(head, (BOOL)targetCRC32 == realCRC32);
 
 	CloseHandle(hFile);
 	return bak;
 }
 
-void akua_file_process(wStream* s, BYTE* type)
+void akuaFileProcess(wStream* s, BYTE* type)
 {
 	fileTransferHead* head = (fileTransferHead*)calloc(1, sizeof(fileTransferHead));
 	if (!head)
@@ -131,32 +152,33 @@ void akua_file_process(wStream* s, BYTE* type)
 	head->filePath = (BYTE*)calloc(1, head->filePathLength);
 	Stream_Read(s, head->fileName, head->fileNameLength);
 	Stream_Read(s, head->filePath, head->filePathLength);
-	//printf("Type %hhu: %s %s %d %d\n", *type, head->fileName, head->filePath, head->fileNameLength,
-	//       head->filePathLength);
+	// printf("Type %hhu: %s %s %d %d\n", *type, head->fileName, head->filePath,
+	// head->fileNameLength,
+	//        head->filePathLength);
 
 	switch (*type)
 	{
 		case 0x36:
 		{
-			if (!recv_file_transfer_start(head, s))
+			if (!recvFileTransferStart(head, s))
 				goto seek_remaining;
 			break;
 		}
 		case 0x27:
 		{
-			if (!recv_file_transfer_abort(head, s))
+			if (!recvFileTransferAbort(head, s))
 				goto seek_remaining;
 			break;
 		}
 		case 0x21:
 		{
-			if (!recv_file_transfer_packet(head, s))
+			if (!recvFileTransferPacket(head, s))
 				goto seek_remaining;
 			break;
 		}
 		case 0x02:
 		{
-			if (!recv_file_transfer_verify(head, s))
+			if (!recvFileTransferVerify(head, s))
 				goto seek_remaining;
 			break;
 		}

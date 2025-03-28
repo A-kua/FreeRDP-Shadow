@@ -379,10 +379,10 @@ extern "C"
 		              Can be set before calling freerdp_connect() to have it executed after the
 		              actual connection has succeeded. Must be set to NULL if not needed. */
 
-		ALIGN64 pAuthenticate Authenticate;                         /**< (offset 50)
-		                                                         Callback for authentication.
-		                                                         It is used to get the username/password when it was not
-		                                                         provided at connection time. */
+		ALIGN64 pAuthenticate Authenticate; /**< (offset 50)
+		                                 Callback for authentication.
+		                                 It is used to get the username/password when it was not
+		                                 provided at connection time. */
 #if !defined(DEFINE_NO_DEPRECATED)
 		WINPR_DEPRECATED(ALIGN64 pVerifyCertificate VerifyCertificate); /**< (offset 51)
 		                                           Callback for certificate validation.
@@ -555,6 +555,9 @@ extern "C"
 	FREERDP_API void
 	hook_rdp_read_share_data_header(int (*ptr)(wStream*, UINT16*, BYTE*, UINT32*, BYTE*, UINT16*,
 	                                           ptr_rdp_read_share_data_header origin));
+	
+
+
 #ifdef __cplusplus
 }
 #endif
