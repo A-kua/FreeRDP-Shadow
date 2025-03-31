@@ -1,0 +1,48 @@
+
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# 临时文件
+*.tmp
+*.bak
+*.swp
+
+# 日志文件
+*.log
+
+# 配置文件
+appsettings.Development.json
+appsettings.Staging.json
+
+# 项目文件
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# 二进制文件
+*.exe
+*.dll
+*.pdb
+
+# 发布文件夹
+bin/
+obj/
+Publish/
+
+# NuGet 包
+packages/
+*.nupkg
+
+# 测试结果
+TestResults/
+coverage/
+
+# 本地数据库文件
+*.mdf
+*.ldf
+
+# 缓存文件夹
+.vs/
+x64/
