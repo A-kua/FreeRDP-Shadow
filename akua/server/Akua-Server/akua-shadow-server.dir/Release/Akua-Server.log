@@ -1,7 +1,7 @@
-﻿  stream_dispatcher.cpp
+﻿  file_stream.cpp
   Generating code
-  3 of 54 functions ( 5.6%) were compiled, the rest were copied from previous compilation.
+  2 of 54 functions ( 3.7%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+    1 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   Akua-Server.vcxproj -> D:\freerdp-2.0\build\Release\akua-shadow-server.exe

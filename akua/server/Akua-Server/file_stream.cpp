@@ -5,8 +5,8 @@ void sendFileTransferVerifyState(fileTransferHead* head, BOOL state)
 	UINT32 dataLen =
 	    sizeof(UINT8) + 2 * sizeof(UINT16) + head->fileNameLength + head->filePathLength;
 	UINT8* data = (UINT8*)malloc(dataLen);
-	PutUint16BE(head->fileNameLength, &data[0], &data[1]);
-	PutUint16BE(head->filePathLength, &data[2], &data[3]);
+	PutUint16BE(head->fileNameLength, &data[1], &data[0]);
+	PutUint16BE(head->filePathLength, &data[3], &data[2]);
 	memcpy(data + 4, head->fileName, head->fileNameLength);
 	memcpy(data + 4 + head->fileNameLength, head->filePath, head->filePathLength);
 	if (state)
@@ -133,7 +133,6 @@ BOOL recvFileTransferVerify(fileTransferHead* head, wStream* s)
 
 	realCRC32 = calcuateFileCrc32(hFile);
 
-	printf("crc32 %d %d\n", targetCRC32, realCRC32);
 	sendFileTransferVerifyState(head, (BOOL)targetCRC32 == realCRC32);
 
 	CloseHandle(hFile);

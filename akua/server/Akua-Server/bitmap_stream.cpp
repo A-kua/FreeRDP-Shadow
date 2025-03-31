@@ -32,7 +32,7 @@ void PutDataToEmbedStream(UINT8* data, UINT16 dataSize, UINT32 type)
 	PutUint32BE(type, &packetData[4], &packetData[5], &packetData[6], &packetData[7]);
 	memcpy(packetData + 8, data, dataSize);
 	UINT32 crc32 = calculateCrc32(data, dataSize);
-	AppendU32BigEndian(packetData, packetSize, crc32);
+	AppendU32BigEndian(packetData, packetSize-4, crc32);
 	akuaPacket* packet = (akuaPacket*)malloc(sizeof(akuaPacket));
 	packet->data = packetData;
 	packet->packetSize = packetSize;
