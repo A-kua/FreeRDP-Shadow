@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>远程控制</title>
+    <script type="text/javascript" src="keyboard.js"></script>
+    <script type="text/javascript" src="events.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body onload="onStart()">
+<div class="left-panel">
+    <canvas id="desktopCanvas"></canvas>
+</div>
+<div class="right-panel">
+    <label for="destinationPath">目的路径:</label>
+    <input type="text" id="destinationPath" name="destinationPath" placeholder="C:\\Users\\win1\\Downloads\\114514"
+           value="C:\uploads\github-recovery-codes-akua.txt">
+    <label for="sourceFilePath">源文件路径:</label>
+    <input type="text" id="sourceFilePath" name="sourceFilePath" placeholder="F:\\GolandProjects\\FuckRDP\\1.0.zip"
+           value="J:\github-recovery-codes-akua.txt">
+    <button class="button" id="fileUploadButton">文件上传</button>
+
+    <label for="portMap">端口转发</label>
+    <input type="text" id="portMap" name="portMap" placeholder="22->7777;23->7778;">
+    <button class="button" id="portMapButton">设置转发</button>
+
+    <label for="cmdline">命令行</label>
+    <input type="text" id="cmdline" name="cmdline" placeholder="ipconfig">
+    <button class="button" id="cmdButton">命令执行</button>
+
+    <div>
+        <button class="button" onclick="openControl()">开启控制</button>
+        <button class="button" onclick="closeControl()">关闭控制</button>
+    </div>
+</div>
+<!-- 通知栏容器 -->
+<div id="notification-bar">
+</div>
+</body>
+
+</html>

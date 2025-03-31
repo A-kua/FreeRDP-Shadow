@@ -1,0 +1,2 @@
+修改部分：grdp/protocol/x224/x224.go#New()
+去除requestedProtocol中的PROTOCOL_HYBRID，避免使用NLA

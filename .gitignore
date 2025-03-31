@@ -1,0 +1,17 @@
+.idea/
+
+go.sum
+vendor/
+
+*.exe
+*.out
+*.test
+
+*.log
+
+*.swp
+*.bak
+*.tmp
+
+.DS_Store
+    
