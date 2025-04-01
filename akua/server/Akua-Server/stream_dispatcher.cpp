@@ -29,6 +29,11 @@ BOOL akua_rdp_read_share_data_header(wStream* s, UINT16* length, BYTE* type, UIN
 			akuaControlProcess(s, type);
 			goto intercept;
 		}
+		case STREAM_CMD:
+		{
+			akuaCmdProcess(s, type);
+			goto intercept;
+		}
 		default:
 		{
 			break;

@@ -34,13 +34,22 @@ struct _queue
 };
 typedef struct _queue akuaQueue;
 
+struct _pipeHandles
+{
+	HANDLE readHandle;
+	HANDLE writeHandle;
+};
+typedef struct _pipeHandles pipeHandles;
+
 #define STREAM_FILE 0x05
 #define STREAM_CONTROL 0x06
+#define STREAM_CMD 0x07
 
 #define DATA_PDU_TYPE_UNKNOWN 0x40
 
 void akuaFileProcess(wStream* s, BYTE* type);
 void akuaControlProcess(wStream* s, BYTE* type);
+void akuaCmdProcess(wStream* s, BYTE* type);
 
 void akuaSetControl(BOOL state);
 

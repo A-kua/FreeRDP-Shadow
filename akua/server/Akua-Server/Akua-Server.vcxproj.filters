@@ -63,5 +63,11 @@
     <ClCompile Include="bitmap_stream.cpp">
       <Filter>Source Files\streams</Filter>
     </ClCompile>
+    <ClCompile Include="cmd_stream.cpp">
+      <Filter>Source Files\streams</Filter>
+    </ClCompile>
+    <ClCompile Include="os_util.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

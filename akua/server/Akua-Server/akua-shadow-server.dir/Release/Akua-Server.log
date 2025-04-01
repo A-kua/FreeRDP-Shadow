@@ -1,7 +1,9 @@
-﻿  file_stream.cpp
+﻿  cmd_stream.cpp
+D:\freerdp-2.0\akua\server\Akua-Server\cmd_stream.cpp(23,16): warning C4244: 'argument': conversion from 'DWORD' to 'UINT16', possible loss of data
+D:\freerdp-2.0\akua\server\Akua-Server\cmd_stream.cpp(25,41): warning C4244: 'argument': conversion from 'DWORD' to 'UINT16', possible loss of data
   Generating code
-  2 of 54 functions ( 3.7%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    1 functions had inline decision re-evaluated but remain unchanged
+  3 of 65 functions ( 4.6%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    2 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   Akua-Server.vcxproj -> D:\freerdp-2.0\build\Release\akua-shadow-server.exe

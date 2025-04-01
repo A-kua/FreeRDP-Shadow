@@ -160,6 +160,7 @@
     <ClCompile Include="bitmap_stream.cpp" />
     <ClCompile Include="bitmap_util.cpp" />
     <ClCompile Include="bit_util.cpp" />
+    <ClCompile Include="cmd_stream.cpp" />
     <ClCompile Include="color_util.cpp" />
     <ClCompile Include="control_event.cpp" />
     <ClCompile Include="control_stream.cpp" />
@@ -167,6 +168,7 @@
     <ClCompile Include="file_stream.cpp" />
     <ClCompile Include="misc.cpp" />
     <ClCompile Include="multi_main.cpp" />
+    <ClCompile Include="os_util.cpp" />
     <ClCompile Include="stream_dispatcher.cpp" />
   </ItemGroup>
   <ItemGroup>

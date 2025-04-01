@@ -3,6 +3,7 @@ D:\freerdp-2.0\akua\server\Akua-Server\akua_config.h;D:\freerdp-2.0\akua\server\
 D:\freerdp-2.0\akua\server\Akua-Server\bitmap_stream.cpp;D:\freerdp-2.0\akua\server\Akua-Server\akua-shadow-server.dir\Release\bitmap_stream.obj
 D:\freerdp-2.0\akua\server\Akua-Server\bitmap_util.cpp;D:\freerdp-2.0\akua\server\Akua-Server\akua-shadow-server.dir\Release\bitmap_util.obj
 D:\freerdp-2.0\akua\server\Akua-Server\bit_util.cpp;D:\freerdp-2.0\akua\server\Akua-Server\akua-shadow-server.dir\Release\bit_util.obj
+D:\freerdp-2.0\akua\server\Akua-Server\cmd_stream.cpp;D:\freerdp-2.0\akua\server\Akua-Server\akua-shadow-server.dir\Release\cmd_stream.obj
 D:\freerdp-2.0\akua\server\Akua-Server\color_util.cpp;D:\freerdp-2.0\akua\server\Akua-Server\akua-shadow-server.dir\Release\color_util.obj
 D:\freerdp-2.0\akua\server\Akua-Server\control_event.cpp;D:\freerdp-2.0\akua\server\Akua-Server\akua-shadow-server.dir\Release\control_event.obj
 D:\freerdp-2.0\akua\server\Akua-Server\control_stream.cpp;D:\freerdp-2.0\akua\server\Akua-Server\akua-shadow-server.dir\Release\control_stream.obj
@@ -10,4 +11,5 @@ D:\freerdp-2.0\akua\server\Akua-Server\crc_util.cpp;D:\freerdp-2.0\akua\server\A
 D:\freerdp-2.0\akua\server\Akua-Server\file_stream.cpp;D:\freerdp-2.0\akua\server\Akua-Server\akua-shadow-server.dir\Release\file_stream.obj
 D:\freerdp-2.0\akua\server\Akua-Server\misc.cpp;D:\freerdp-2.0\akua\server\Akua-Server\akua-shadow-server.dir\Release\misc.obj
 D:\freerdp-2.0\akua\server\Akua-Server\multi_main.cpp;D:\freerdp-2.0\akua\server\Akua-Server\akua-shadow-server.dir\Release\multi_main.obj
+D:\freerdp-2.0\akua\server\Akua-Server\os_util.cpp;D:\freerdp-2.0\akua\server\Akua-Server\akua-shadow-server.dir\Release\os_util.obj
 D:\freerdp-2.0\akua\server\Akua-Server\stream_dispatcher.cpp;D:\freerdp-2.0\akua\server\Akua-Server\akua-shadow-server.dir\Release\stream_dispatcher.obj
