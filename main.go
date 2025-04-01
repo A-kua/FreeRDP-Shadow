@@ -45,6 +45,3 @@ func main() {
 	}
 	dataLayer.LooperStop()
 }
-
-// C:\Users\simon-desktop\Desktop\jetbrains.txt
-// C:\Users\win1\Downloads\114514\jetbrains.txt

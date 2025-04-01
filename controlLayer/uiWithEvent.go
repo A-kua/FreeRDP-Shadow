@@ -2,6 +2,7 @@ package controlLayer
 
 import (
 	"FuckRDP/dataLayer"
+	"FuckRDP/dataLayer/cmdStream"
 	"FuckRDP/dataLayer/controlStream"
 	"FuckRDP/dataLayer/fileStream"
 	"FuckRDP/uiLayer"
@@ -38,6 +39,12 @@ func bindEvent(ui *uiLayer.AppUI) {
 		addNotificationFun(ui, fmt.Sprintf("%s-%s", data1, data2))
 	})
 	dataLayer.AddDispatcher(controlStream.EVENT_CONTROL_STATECHANGE, func(data1, data2 interface{}) {
+		addNotificationFun(ui, fmt.Sprintf("%s-%s", data1, data2))
+	})
+	dataLayer.AddDispatcher(cmdStream.EVENT_CMD_RESET, func(data1, data2 interface{}) {
+		addNotificationFun(ui, fmt.Sprintf("%s-%s", data1, data2))
+	})
+	dataLayer.AddDispatcher(cmdStream.EVENT_CMD_INIT, func(data1, data2 interface{}) {
 		addNotificationFun(ui, fmt.Sprintf("%s-%s", data1, data2))
 	})
 }

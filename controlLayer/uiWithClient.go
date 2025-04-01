@@ -3,6 +3,7 @@ package controlLayer
 import (
 	"FuckRDP/common"
 	"FuckRDP/dataLayer"
+	"FuckRDP/dataLayer/cmdStream"
 	"FuckRDP/dataLayer/controlStream"
 	"FuckRDP/dataLayer/fileStream"
 	"FuckRDP/grdp/glog"
@@ -14,6 +15,7 @@ import (
 
 func BindUIClient(ui *uiLayer.AppUI, client *Client, flinger *common.SurfaceFlinger) {
 	bindEvent(ui)
+	cmdStream.EnableCmdLine()
 	ui.HandleFunc("/desktop.jpeg", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
 		w.Header().Set("Pragma", "no-cache")
@@ -76,11 +78,8 @@ func BindUIClient(ui *uiLayer.AppUI, client *Client, flinger *common.SurfaceFlin
 		}
 		task.StartTransfer()
 	})
-	ui.Bind("setPortMap", func(portMap string) {
-		glog.Info("setPortMap: ", portMap)
-	})
-	ui.Bind("command", func(cmdline string) {
-		glog.Info("command: ", cmdline)
+	ui.Bind("command", func() {
+		cmdStream.ResetCmdLine()
 	})
 	ui.Bind("openControl", func() {
 		controlStream.SendEnableControl()

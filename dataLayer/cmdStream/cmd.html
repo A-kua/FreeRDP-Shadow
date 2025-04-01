@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PowerShell 终端</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #000;
+            color: #0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #terminal {
+            width: 80%;
+            max-width: 800px;
+            border: 1px solid #0f0;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            height: 80vh;
+        }
+
+        #output {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 10px;
+        }
+
+        #input-container {
+            display: flex;
+        }
+
+        #prompt {
+            margin-right: 5px;
+        }
+
+        #input {
+            flex-grow: 1;
+            background-color: transparent;
+            border: none;
+            color: #0f0;
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+<div id="terminal">
+    <div id="output"></div>
+    <div id="input-container">
+        <span id="prompt">$</span>
+        <input type="text" id="input" placeholder="输入命令">
+    </div>
+</div>
+<script>
+    const output = document.getElementById('output');
+    const input = document.getElementById('input');
+    const socket = new WebSocket('ws://' + window.location.host + '/terminal');
+
+    socket.onmessage = function (event) {
+        let data;
+        if (event.data instanceof Blob) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const line = document.createElement('p');
+                line.textContent = e.target.result;
+                output.appendChild(line);
+                output.scrollTop = output.scrollHeight;
+            };
+            reader.readAsText(event.data);
+        } else {
+            const line = document.createElement('p');
+            line.textContent = event.data;
+            output.appendChild(line);
+            output.scrollTop = output.scrollHeight;
+        }
+    };
+
+    input.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            const command = input.value.trim();
+            if (command) {
+                socket.send(command);
+                input.value = '';
+            }
+        }
+    });
+</script>
+</body>
+
+</html>

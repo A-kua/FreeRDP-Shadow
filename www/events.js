@@ -58,7 +58,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     const fileUploadButton = document.getElementById('fileUploadButton');
-    const portMapButton = document.getElementById('portMapButton');
     const cmdButton = document.getElementById('cmdButton');
 
 
@@ -67,13 +66,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const sourceFilePath = document.getElementById('sourceFilePath').value;
         await uploadFile(destinationPath, sourceFilePath);
     });
-    portMapButton.addEventListener('click', async () => {
-        const portMap = document.getElementById('portMap').value;
-        await setPortMap(portMap);
-    });
+
     cmdButton.addEventListener('click', async () => {
-        const cmdline = document.getElementById('cmdline').value;
-        await command(cmdline);
+        await command();
     });
 
 });

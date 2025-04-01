@@ -41,16 +41,16 @@ func verifyBack(data []byte) {
 
 	err := struc.Unpack(headBuf, verifyHead)
 	if err != nil {
-		glog.Errorf("verifyBack Head %v %v\n", err, data[:len(data)-5])
+		glog.Errorf("verifyBack Head %v %v", err, data[:len(data)-5])
 	} else {
-		glog.Debugf("verifyBack Head %d %d %s %s\n", verifyHead.FileNameLength, verifyHead.FilePathLength, verifyHead.FileName, verifyHead.FilePath)
+		glog.Debugf("verifyBack Head %d %d %s %s", verifyHead.FileNameLength, verifyHead.FilePathLength, verifyHead.FileName, verifyHead.FilePath)
 	}
 
 	err = struc.Unpack(bodyBuf, verifyBody)
 	if err != nil {
-		glog.Errorf("verifyBack Body %v\n", err)
+		glog.Errorf("verifyBack Body %v", err)
 	} else {
-		glog.Debugf("verifyBack Body %d %d\n", verifyBody.Crc32, verifyBody.State)
+		glog.Debugf("verifyBack Body %d %d", verifyBody.Crc32, verifyBody.State)
 	}
 	hash := crc32.NewIEEE()
 	_, _ = hash.Write(data[:len(data)-4])

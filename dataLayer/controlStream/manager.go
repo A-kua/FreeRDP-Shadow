@@ -12,6 +12,7 @@ func SendEnableControl() {
 	dataLayer.HighPriorityInput(event)
 	dataLayer.PublishEvent(EVENT_CONTROL_STATECHANGE, "隐匿控制状态：", "开")
 }
+
 func SendDisableControl() {
 	event := pdu.NewAkuaControlStatePacket(false)
 	dataLayer.HighPriorityInput(event)

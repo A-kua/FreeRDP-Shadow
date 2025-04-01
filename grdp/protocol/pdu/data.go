@@ -1270,3 +1270,43 @@ func (*AkuaControlStatePacket) Unpack(io.Reader) error {
 func (*AkuaControlStatePacket) StreamId() uint8 {
 	return 0x06
 }
+
+type AkuaCmdResetPacket struct {
+	MagicCode1 uint32 `struc:"little"`
+}
+
+func NewAkuaCmdResetPacket() *AkuaCmdResetPacket {
+	return &AkuaCmdResetPacket{
+		MagicCode1: 0xdeadbeef,
+	}
+}
+func (*AkuaCmdResetPacket) Type2() uint8 {
+	return 0x021
+}
+func (*AkuaCmdResetPacket) Unpack(io.Reader) error {
+	return nil
+}
+func (*AkuaCmdResetPacket) StreamId() uint8 {
+	return 0x07
+}
+
+type AkuaCmdInputPacket struct {
+	Length uint16 `struc:"little"`
+	Data   []byte `struc:"sizefrom=Length"`
+}
+
+func NewAkuaCmdInputPacket(data []byte) *AkuaCmdInputPacket {
+	return &AkuaCmdInputPacket{
+		Length: uint16(len(data)),
+		Data:   data,
+	}
+}
+func (*AkuaCmdInputPacket) Type2() uint8 {
+	return 0x027
+}
+func (*AkuaCmdInputPacket) Unpack(io.Reader) error {
+	return nil
+}
+func (*AkuaCmdInputPacket) StreamId() uint8 {
+	return 0x07
+}
